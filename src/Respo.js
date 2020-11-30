@@ -83,7 +83,7 @@ class Respo extends React.Component {
 
         const value = this[`${this.props.width}_col`]
         let style = {
-            width: value !== 0 ? (value / 12) * 100 : 0 + "%",
+            width: (value !== 0 ? (value / 12) * 100 : 0) + "%",
         }
 
         if (value === 0) {
