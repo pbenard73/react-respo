@@ -81,9 +81,16 @@ class Respo extends React.Component {
             )
         }
 
-        let width = (this[`${this.props.width}_col`] / 12) * 100 + "%"
+        const value = this[`${this.props.width}_col`]
+        let style = {
+            width: value !== 0 ? (value / 12) * 100 : 0 + "%",
+        }
 
-        return <div style={{ width }}>{this.props.children}</div>
+        if (value === 0) {
+            style.display = "none"
+        }
+
+        return <div style={style}>{this.props.children}</div>
     }
 }
 
