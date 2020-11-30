@@ -23,13 +23,9 @@ class Respo extends React.Component {
         this.resizeObserver = new ResizeObserver(entries => {
             for (let entry of entries) {
                 let width = entry.contentRect.width
-                console.log(width, this.md_width, this.lg_width)
 
                 if (width < this.md_width) {
-                    console.log("is inf")
-                    self.setState({ width: "xs" }, () => {
-                        console.log(this.state)
-                    })
+                    self.setState({ width: "xs" })
                     break
                 } else if (width >= this.lg_width) {
                     self.setState({ width: "lg" })
