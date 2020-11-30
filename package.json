@@ -1,0 +1,61 @@
+{
+  "name": "react-respo",
+  "version": "0.1.0",
+  "private": false,
+  "author": "BENARD Patrick <pbenard73@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.2.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",  
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rm -rf ./dist; ./node_modules/webpack/bin/webpack.js && npx tsc",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "clean-webpack-plugin": "^3.0.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.2.0"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ],
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  }
+
+}

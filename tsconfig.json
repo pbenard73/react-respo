@@ -1,0 +1,10 @@
+{
+  "include": ["src/Respo.js"],
+
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist"
+  }
+}
