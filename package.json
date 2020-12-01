@@ -4,6 +4,11 @@
   "private": false,
   "author": "BENARD Patrick <pbenard73@gmail.com>",
   "license": "ISC",
+  "homepage": "https://github.com/pbenard73/react-respo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pbenard73/react-respo"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
@@ -14,7 +19,7 @@
     "web-vitals": "^0.2.4"
   },
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",  
+  "types": "./dist/Respo.d.ts",  
   "scripts": {
     "start": "react-scripts start",
     "build": "rm -rf ./dist; ./node_modules/webpack/bin/webpack.js && npx tsc",

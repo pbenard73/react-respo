@@ -1,15 +1,15 @@
 export default Respo;
 declare class Respo {
     constructor(props: any);
-    md_width: any;
-    lg_width: any;
-    xs_col: any;
-    md_col: any;
-    lg_col: any;
+    md_b: any;
+    lg_b: any;
+    xs: any;
+    md: any;
+    lg: any;
     state: {
         width: string;
     };
-    myRef: any;
+    ref: any;
     resizeObserver: any;
     componentDidMount(): void;
     componentWillUnmount(): void;

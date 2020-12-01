@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# React Respo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React responsive depending on container width, based on resizeObserver.
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+```js
+import Respo from 'react-respo'
 
-### `npm start`
+const App = () => (
+  <Pixel container md={500} lg={604}>
+	<Pixel xs={0} md={6} lg={3}>
+		<p>column one</p>
+	</Pixel>
+	<Pixel xs={6} md={0} lg={3}>
+		<p>column two</p>
+	</Pixel>
+	<Pixel xs={6} md={3} lg={3}>
+		<p>column three</p>
+	</Pixel>
+	<Pixel xs={12} md={3} lg={3}>
+		<p>column four</p>
+	</Pixel>
+  </Pixel>
+)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Params
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Container
 
-### `npm test`
+The container takes the `md` and `lg` breakpoint. By default `769` and `1024`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Children
 
-### `npm run build`
+The children take the `xs`, `md` and `lg` properties, corresponding on the rendering size on 12 columns depending on the container width. By default all this value are at `12`
+If a value is set to `0` it will be interpreted as `display:none`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

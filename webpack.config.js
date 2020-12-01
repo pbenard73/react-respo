@@ -12,6 +12,10 @@ module.exports = {
     libraryTarget: 'umd'
   },
   plugins: [new CleanWebpackPlugin()],
+externals: {
+ 'react': 'react', // Case matters here 
+ 'react-dom' : 'reactDOM' // Case matters here 
+},	
   module: {
     rules: [
      {

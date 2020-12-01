@@ -4,30 +4,34 @@ class Respo extends React.Component {
     constructor(props) {
         super(props)
 
-        this.md_width = props.container !== undefined && props.md !== undefined && props.md > 0 ? props.md : 769
-        this.lg_width =
-            props.container !== undefined && props.lg !== undefined && props.lg > 0 && props.lg > this.md_width
-                ? props.lg
-                : 1024
-        this.xs_col = props.xs === undefined || props.xs < 0 || props.xs > 12 ? 12 : props.xs
-        this.md_col = props.md === undefined || props.md < 0 || props.md > 12 ? this.xs_col : props.md
-        this.lg_col = props.lg === undefined || props.lg < 0 || props.lg > 12 ? this.md_col : props.lg
+        const isContainerAvailable = breakpoint =>
+            props.container !== undefined && props[breakpoint] !== undefined && props[breakpoint] > 0
+        const available = (breakpoint, defaultValue) =>
+            props[breakpoint] === undefined || props[breakpoint] < 0 || props[breakpoint] > 12
+                ? defaultValue
+                : props[breakpoint]
+
+        this.md_b = isContainerAvailable("md") === true ? props.md : 769
+        this.lg_b = isContainerAvailable("lg") === true && props.lg > this.md_b ? props.lg : 1024
+        this.xs = available("xs", 12)
+        this.md = available("md", this.xs)
+        this.lg = available("lg", this.md)
 
         this.state = {
             width: "md",
         }
 
-        this.myRef = React.createRef()
+        this.ref = React.createRef()
 
         const self = this
         this.resizeObserver = new ResizeObserver(entries => {
             for (let entry of entries) {
                 let width = entry.contentRect.width
 
-                if (width < this.md_width) {
+                if (width < this.md_b) {
                     self.setState({ width: "xs" })
                     break
-                } else if (width >= this.lg_width) {
+                } else if (width >= this.lg_b) {
                     self.setState({ width: "lg" })
                     break
                 } else {
@@ -42,9 +46,8 @@ class Respo extends React.Component {
         if (this.props.container === undefined) {
             return
         }
-        const node = this.myRef.current
 
-        this.resizeObserver.observe(node)
+        this.resizeObserver.observe(this.ref.current)
     }
 
     componentWillUnmount() {
@@ -52,17 +55,26 @@ class Respo extends React.Component {
             return
         }
 
-        const node = this.myRef.current
-        this.resizeObserver.unobserve(node)
+        this.resizeObserver.unobserve(this.ref.current)
     }
 
     render() {
+        const { xs, md, lg, container, style, ...otherProps } = this.props
+        const mergeStyle = givenStyle => {
+            if (style === undefined) {
+                return givenStyle
+            }
+
+            return { ...style, ...givenStyle }
+        }
+
         if (this.props.container !== undefined) {
-            const style = {
+            let compStyle = {
                 display: "flex",
                 flexDirection: "row",
                 flexWrap: "wrap",
             }
+
             const childrenWithProps = React.Children.map(this.props.children, child => {
                 if (React.isValidElement(child)) {
                     return React.cloneElement(child, { width: this.state.width })
@@ -71,22 +83,27 @@ class Respo extends React.Component {
             })
 
             return (
-                <div style={style} ref={this.myRef}>
+                <div {...otherProps} style={mergeStyle(compStyle)} ref={this.ref}>
                     {childrenWithProps}
                 </div>
             )
         }
 
-        const value = this[`${this.props.width}_col`]
-        let style = {
+        const value = this[this.props.width]
+
+        let compStyle = {
             width: (value !== 0 ? (value / 12) * 100 : 0) + "%",
         }
 
         if (value === 0) {
-            style.display = "none"
+            compStyle.display = "none"
         }
 
-        return <div style={style}>{this.props.children}</div>
+        return (
+            <div {...otherProps} style={mergeStyle(compStyle)}>
+                {this.props.children}
+            </div>
+        )
     }
 }
 
