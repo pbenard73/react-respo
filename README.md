@@ -23,6 +23,7 @@ const App = () => (
 	</Pixel>
   </Pixel>
 )
+```
 
 ## Params
 
