@@ -8,20 +8,20 @@ React responsive depending on container width, based on resizeObserver.
 import Respo from 'react-respo'
 
 const App = () => (
-  <Pixel container md={500} lg={604}>
-	<Pixel xs={0} md={6} lg={3}>
+  <Respo container md={500} lg={604}>
+	<Respo xs={0} md={6} lg={3}>
 		<p>column one</p>
-	</Pixel>
-	<Pixel xs={6} md={0} lg={3}>
+	</Respo>
+	<Respo xs={6} md={0} lg={3}>
 		<p>column two</p>
-	</Pixel>
-	<Pixel xs={6} md={3} lg={3}>
+	</Respo>
+	<Respo xs={6} md={3} lg={3}>
 		<p>column three</p>
-	</Pixel>
-	<Pixel xs={12} md={3} lg={3}>
+	</Respo>
+	<Respo xs={12} md={3} lg={3}>
 		<p>column four</p>
-	</Pixel>
-  </Pixel>
+	</Respo>
+  </Respo>
 )
 ```
 
