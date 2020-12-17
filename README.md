@@ -4,7 +4,8 @@ React responsive depending on container width, based on resizeObserver.
 
 [Demonstration](https://pbenard73.github.io/react-respo/)
 
-## Usage
+## Usage
+
 
 ```js
 import { Respo } from "react-respo"
