@@ -1,4 +1,5 @@
 import React from "react"
+import './Respo.scss'
 
 class Respo extends React.Component {
     constructor(props) {
@@ -68,6 +69,8 @@ class Respo extends React.Component {
             return { ...style, ...givenStyle }
         }
 
+	const isSolo = this.props.wrapper !== undefined
+
         if (this.props.container !== undefined) {
             let compStyle = {
                 display: "flex",
@@ -83,8 +86,8 @@ class Respo extends React.Component {
             })
 
             return (
-                <div {...otherProps} style={mergeStyle(compStyle)} ref={this.ref}>
-                    {childrenWithProps}
+                <div {...otherProps} width={this.state.width} style={mergeStyle(compStyle)} ref={this.ref}>
+                    {isSolo === true ? this.props.children : childrenWithProps}
                 </div>
             )
         }

@@ -1,0 +1,23 @@
+[width='xs'] .hidden-xs,
+[width='md'] .hidden-md,
+[width='lg'] .hidden-lg,
+[width='xs'].hidden-xs,
+[width='md'].hidden-md,
+[width='lg'].hidden-lg,
+{display:none}
+
+
+[width='xs'] .show-md,
+[width='xs'].show-md,
+[width='xs'] .show-lg,
+[width='xs'].show-lg,
+[width='md'] .show-xs,
+[width='md'].show-xs,
+[width='md'] .show-lg,
+[width='md'].show-lg,
+[width='lg'] .show-xs,
+[width='lg'].show-xs,
+[width='lg'] .show-md,
+[width='lg'].show-md,
+{display:none}
+

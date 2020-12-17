@@ -1,6 +1,7 @@
 {
-  "include": ["src/Respo.js"],
-
+  "include": [
+    "src/index.js"
+  ],
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,
