@@ -6,6 +6,28 @@ React responsive depending on container width, based on resizeObserver.
 
 ## Usage
 
+### Components Switch
+
+```js
+import { Respo } from "react-respo"
+
+const App = () => {
+  const XsComponent = <p>I'm the XS</p>
+  const MdComponent = <p>I'm the MD</p>
+  const LgComponent = <p>I'm the LG</p>
+
+  return (
+    <Respo
+      md={500}
+      lg={604}
+      xsComponent={XsComponent}
+      mdComponent={MdComponent}
+      lgComponent={LgComponent}
+    />
+}
+```
+
+### Grid System
 
 ```js
 import { Respo } from "react-respo"
@@ -46,15 +68,15 @@ const App = () => (
 )
 ```
 
-## Params
+### Params For Grid System
 
-### Container
+#### Container
 
 The container takes the `md` and `lg` breakpoint. By default `769` and `1024`
 
 It can take the attribute `wrapper` : In this case, the grid system is not provided, but the class utility is available.
 
-### Children for Grid System
+#### Children for Grid System
 
 The children take the `xs`, `md` and `lg` properties, corresponding on the rendering size on 12 columns depending on the container width. By default all this value are at `12`
 If a value is set to `0` it will be interpreted as `display:none`

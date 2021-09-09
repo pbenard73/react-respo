@@ -1,113 +1,146 @@
-import React from "react"
-import './Respo.scss'
+import React, { useState, useEffect } from "react"
+import "./Respo.scss"
 
-class Respo extends React.Component {
-    constructor(props) {
-        super(props)
+const Respo = props => {
+    const isContainerAvailable = breakpoint =>
+        props.container !== undefined && props[breakpoint] !== undefined && props[breakpoint] > 0
+    const available = (breakpoint, defaultValue) =>
+        props[breakpoint] === undefined || props[breakpoint] < 0 || props[breakpoint] > 12 ? defaultValue : props[breakpoint]
 
-        const isContainerAvailable = breakpoint =>
-            props.container !== undefined && props[breakpoint] !== undefined && props[breakpoint] > 0
-        const available = (breakpoint, defaultValue) =>
-            props[breakpoint] === undefined || props[breakpoint] < 0 || props[breakpoint] > 12
-                ? defaultValue
-                : props[breakpoint]
+    const [md_breakpoint, setMd_breakPoint] = useState(isContainerAvailable("md") === true ? props.md : 769)
+    const [lg_breakpoint, setLg_breakPoint] = useState(
+        isContainerAvailable("lg") === true && props.lg > md_breakpoint ? props.lg : 1024
+    )
+    const [xs, setXs] = useState(available("xs", 12))
+    const [md, setMd] = useState(available("md", xs))
+    const [lg, setLg] = useState(available("lg", md))
 
-        this.md_b = isContainerAvailable("md") === true ? props.md : 769
-        this.lg_b = isContainerAvailable("lg") === true && props.lg > this.md_b ? props.lg : 1024
-        this.xs = available("xs", 12)
-        this.md = available("md", this.xs)
-        this.lg = available("lg", this.md)
+    const [width, setWidth] = useState("md")
 
-        this.state = {
-            width: "md",
-        }
-
-        this.ref = React.createRef()
-
-        const self = this
-        this.resizeObserver = new ResizeObserver(entries => {
+    const [resizeObserver, setResizeObserver] = useState(
+        new ResizeObserver(entries => {
             for (let entry of entries) {
-                let width = entry.contentRect.width
-
-                if (width < this.md_b) {
-                    self.setState({ width: "xs" })
+                let containerWidth = entry.contentRect.width
+                console.log(containerWidth)
+                if (containerWidth < md_breakpoint) {
+                    setWidth("xs")
                     break
-                } else if (width >= this.lg_b) {
-                    self.setState({ width: "lg" })
+                } else if (containerWidth >= lg_breakpoint) {
+                    setWidth("lg")
                     break
                 } else {
-                    this.setState({ width: "md" })
+                    setWidth("md")
                     break
                 }
             }
         })
-    }
+    )
 
-    componentDidMount() {
-        if (this.props.container === undefined) {
+    const ref = React.createRef()
+    const {
+        xs: givenXs,
+        md: givenMd,
+        lg: givenLg,
+        container,
+        style,
+        xsComponent,
+        mdComponent,
+        lgComponent,
+        ...otherProps
+    } = props
+    const isToggle = mdComponent !== undefined || xsComponent !== undefined || lgComponent !== undefined
+
+    useEffect(() => {
+        if (props.container === undefined && isToggle === false) {
             return
         }
+        resizeObserver.observe(ref.current)
 
-        this.resizeObserver.observe(this.ref.current)
-    }
+        return () => {
+            resizeObserver.unobserve(ref.current)
+        }
+    }, [])
 
-    componentWillUnmount() {
-        if (this.props.container === undefined) {
-            return
+    const mergeStyle = givenStyle => {
+        if (style === undefined) {
+            return givenStyle
         }
 
-        this.resizeObserver.unobserve(this.ref.current)
+        return { ...style, ...givenStyle }
     }
 
-    render() {
-        const { xs, md, lg, container, style, ...otherProps } = this.props
-        const mergeStyle = givenStyle => {
-            if (style === undefined) {
-                return givenStyle
-            }
+    const isSolo = props.wrapper !== undefined
 
-            return { ...style, ...givenStyle }
-        }
-
-	const isSolo = this.props.wrapper !== undefined
-
-        if (this.props.container !== undefined) {
-            let compStyle = {
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-            }
-
-            const childrenWithProps = React.Children.map(this.props.children, child => {
-                if (React.isValidElement(child)) {
-                    return React.cloneElement(child, { width: this.state.width })
-                }
-                return child
-            })
-
+    if (isToggle === true) {
+        if (width === "lg") {
             return (
-                <div {...otherProps} width={this.state.width} style={mergeStyle(compStyle)} ref={this.ref}>
-                    {isSolo === true ? this.props.children : childrenWithProps}
-                </div>
+                <>
+                    <h1>{width}</h1>
+                    <div {...otherProps} ref={ref}>
+                        {lgComponent || mdComponent || xsComponent}
+                    </div>
+                </>
             )
         }
 
-        const value = this[this.props.width]
-
-        let compStyle = {
-            width: (value !== 0 ? (value / 12) * 100 : 0) + "%",
-        }
-
-        if (value === 0) {
-            compStyle.display = "none"
+        if (width === "md") {
+            return (
+                <>
+                    <h1>{width}</h1>
+                    <div {...otherProps} ref={ref}>
+                        {mdComponent || xsComponent}
+                    </div>
+                </>
+            )
         }
 
         return (
-            <div {...otherProps} style={mergeStyle(compStyle)}>
-                {this.props.children}
+            <>
+                <h1>{width}</h1>
+                <div {...otherProps} ref={ref}>
+                    {xsComponent}
+                </div>
+            </>
+        )
+    }
+
+    if (container !== undefined) {
+        let compStyle = {
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+        }
+
+        const childrenWithProps = React.Children.map(props.children, child => {
+            if (React.isValidElement(child)) {
+                return React.cloneElement(child, { width })
+            }
+
+            return child
+        })
+
+        return (
+            <div {...otherProps} width={width} style={mergeStyle(compStyle)} ref={ref}>
+                {isSolo === true ? props.children : childrenWithProps}
             </div>
         )
     }
+
+    const value = props.width === "lg" ? lg : props.width === "md" ? md : xs
+
+    let compStyle = {
+        width: (value !== 0 ? (value / 12) * 100 : 0) + "%",
+    }
+
+    if (value === 0) {
+        compStyle.display = "none"
+    }
+
+    return (
+        <div {...otherProps} style={mergeStyle(compStyle)}>
+            {props.children}
+        </div>
+    )
 }
 
 export default Respo
