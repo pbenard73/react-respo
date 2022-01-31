@@ -74,33 +74,24 @@ const Respo = props => {
     if (isToggle === true) {
         if (width === "lg") {
             return (
-                <>
-                    <h1>{width}</h1>
-                    <div {...otherProps} ref={ref}>
-                        {lgComponent || mdComponent || xsComponent}
-                    </div>
-                </>
+                  <div {...otherProps} ref={ref}>
+                      {lgComponent || mdComponent || xsComponent}
+                  </div>
             )
         }
 
         if (width === "md") {
             return (
-                <>
-                    <h1>{width}</h1>
-                    <div {...otherProps} ref={ref}>
-                        {mdComponent || xsComponent}
-                    </div>
-                </>
+                  <div {...otherProps} ref={ref}>
+                      {mdComponent || xsComponent}
+                  </div>
             )
         }
 
         return (
-            <>
-                <h1>{width}</h1>
-                <div {...otherProps} ref={ref}>
-                    {xsComponent}
-                </div>
-            </>
+              <div {...otherProps} ref={ref}>
+                  {xsComponent}
+              </div>
         )
     }
 
